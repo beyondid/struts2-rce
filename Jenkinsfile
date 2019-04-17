@@ -50,24 +50,13 @@ node () {
    stage('Lifecycle Evaluation'){
     // postGitHub commitId, 'pending', 'analysis', 'Nexus Lifecycle Analysis is running'
 
-      def policyEvaluationResult = nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: manualApplication('struts2-rce'), iqStage: 'stage-release', jobCredentialsId: ''
+      def policyEvaluationResult = nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: '1422', iqStage: 'stage-release', jobCredentialsId: ''
     /*  if (currentBuild.result == 'FAILURE'){
         postGitHub commitId, 'failure', 'analysis', 'Nexus Lifecycle Analysis failed',"${policyEvaluationResult.applicationCompositionReportUrl}"
         return
       } else {
         postGitHub commitId, 'success', 'analysis', 'Nexus Lifecycle Analysis succeeded',"${policyEvaluationResult.applicationCompositionReportUrl}"
       } */
-   }
-
-   
-   stage('Build Docker Image'){
-    sh 'pwd'
-    sh 'ls -l'
-    sh 'docker build -t struts2-rce:latest .'
-   }
-   
-   stage('Deploy Docker Image'){
-    sh 'docker run -d -p 9080:8080 struts2-rce:latest'
    }
    
 }
